@@ -17,16 +17,22 @@ p " The determinant of matrix B is #{determinant_of_b}"
 #       [d, e, f],
 #       [g, h, i]]
 # row & colum for a as cofactor
-a_row = b[0][0]
+a_index = b[0][0]
 a_column = b.map { |num| num[0] }
 # row & colum for b as cofactor
-b_row = b[0][1]
+b_index = b[0][1]
 b_column = b.map { |num| num[1] }
 # row & colum for c as cofactor
-c_row = b[0][2]
+c_index = b[0][2]
 c_column = b.map { |num| num[2] }
 
-# function to exclude row and column of cofactor to get minor matrix
+
 # iterating over row & getting the column to each element of the row
 # excluding row and column for each cofactor in row
 # calculating determinant
+
+# b.each do |row|
+#   row.each_with_index do |col|
+#     col.each { |num| num[2] }
+#   end
+# end
