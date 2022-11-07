@@ -1,7 +1,7 @@
 b = [[3, -3, 3], [3, 8, -4], [9, 4, 2]]
 
 def determinant2(arr)
-  (arr[0][0] * arr[1][1]) - (arr[1][0] * arr[0][1])
+  (arr[0][0] * arr[1][1]) - (arr[0][1] * arr[1][0])
 end
 
 # ----------- 1 --------------
@@ -25,25 +25,27 @@ def determinant(arr)
     sum = 0
     row.each_with_index do |element, index|
       coefficient = (index % 2).zero? ? 1 : -1
-      sub = submatrix(arr, index)
-      sum += coefficient * element * determinant(sub)
+      submatrix = submatrix(arr, index)
+      sum += coefficient * element * determinant(submatrix)
     end
     sum
   end
 end
 
 def submatrix(arr, pivot)
-  sub = []
+  sub_array = []
   arr.each_with_index do |row, index|
     next if index.zero?
 
-    sub_array = []
+    sub_row = []
 
     row.each_with_index do |col, j|
       next if j == pivot
 
-      sub_array << col
+      sub_row << (arr[index][j])
     end
-    sub << sub_array
+    sub_array << sub_row
   end
 end
+
+p determinant3(b)
