@@ -1,38 +1,49 @@
-
 b = [[3, -3, 3], [3, 8, -4], [9, 4, 2]]
 
-def determinant_2x2(a,b,c,d)
-  (a * d) - (b * c)
+def determinant2(arr)
+  (arr[0][0] * arr[1][1]) - (arr[1][0] * arr[0][1])
 end
 
 # ----------- 1 --------------
-def determinant_of_b
-  3 * (1) * determinant_2x2(8, -4, 4, 2) + (-3) * (-1) * determinant_2x2(3, -4, 9, 2) + 3 * (1) * determinant_2x2(3, 8, 9, 4)
+def determinant3(arr)
+  a, b, c = arr.first
+
+  a * 1 * determinant2(submatrix(arr, 0)) +
+    b * -1 * determinant2(submatrix(arr, 1)) +
+    c * 1 * determinant2(submatrix(arr, 2))
+end
+# def determinant_of_b
+#   3 * (1) * determinant2(8, -4, 4, 2) + (-3) * (-1) * determinant2(3, -4, 9, 2) + 3 * (1) * determinant2(3, 8, 9, 4)
+# end
+# ---------- 2 ---------------
+
+def determinant(arr)
+  if arr.size == 2
+    determinant2(arr)
+  else
+    row = arr.first
+    sum = 0
+    row.each_with_index do |element, index|
+      coefficient = (index % 2).zero? ? 1 : -1
+      sub = submatrix(arr, index)
+      sum += coefficient * element * determinant(sub)
+    end
+    sum
+  end
 end
 
-p " The determinant of matrix B is #{determinant_of_b}"
+def submatrix(arr, pivot)
+  sub = []
+  arr.each_with_index do |row, index|
+    next if index.zero?
 
-# ---------- 2 ---------------
-# MTX= [[a, b, c],
-#       [d, e, f],
-#       [g, h, i]]
-# row & colum for a as cofactor
-a_index = b[0][0]
-a_column = b.map { |num| num[0] }
-# row & colum for b as cofactor
-b_index = b[0][1]
-b_column = b.map { |num| num[1] }
-# row & colum for c as cofactor
-c_index = b[0][2]
-c_column = b.map { |num| num[2] }
+    sub_array = []
 
+    row.each_with_index do |col, j|
+      next if j == pivot
 
-# iterating over row & getting the column to each element of the row
-# excluding row and column for each cofactor in row
-# calculating determinant
-
-# b.each do |row|
-#   row.each_with_index do |col|
-#     col.each { |num| num[2] }
-#   end
-# end
+      sub_array << col
+    end
+    sub << sub_array
+  end
+end
